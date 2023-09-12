@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
-// @SOURCE:/Users/vinniebrice/induction/play-template/conf/routes
-// @DATE:Mon May 23 22:16:23 BST 2022
+// @SOURCE:/Users/aashvin.relwani/Documents/GitHub/play-template/conf/routes
+// @DATE:Tue Sep 12 17:19:01 BST 2023
 
 
 package router {
