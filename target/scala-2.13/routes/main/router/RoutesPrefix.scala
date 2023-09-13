@@ -1,6 +1,6 @@
 // @GENERATOR:play-routes-compiler
 // @SOURCE:/Users/aashvin.relwani/Documents/GitHub/play-template/conf/routes
-// @DATE:Tue Sep 12 17:19:01 BST 2023
+// @DATE:Wed Sep 13 10:08:56 BST 2023
 
 
 package router {
