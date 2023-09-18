@@ -1,6 +1,5 @@
 // @GENERATOR:play-routes-compiler
-// @SOURCE:/Users/aashvin.relwani/Documents/GitHub/play-template/conf/routes
-// @DATE:Wed Sep 13 10:08:56 BST 2023
+// @SOURCE:conf/routes
 
 import play.api.mvc.Call
 
@@ -20,25 +19,31 @@ package controllers {
     // @LINE:11
     def read(id:String): Call = {
       
-      Call("GET", _prefix + { _defaultPrefix } + "read/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
+      Call("GET", _prefix + { _defaultPrefix } + "api/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
     }
   
     // @LINE:9
     def create(): Call = {
       
-      Call("POST", _prefix + { _defaultPrefix } + "create")
+      Call("POST", _prefix + { _defaultPrefix } + "api/create")
+    }
+  
+    // @LINE:17
+    def getGoogleBook(search:String, term:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "library/google/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("search", search)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("term", term)))
     }
   
     // @LINE:15
     def delete(id:String): Call = {
       
-      Call("DELETE", _prefix + { _defaultPrefix } + "delete/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
+      Call("DELETE", _prefix + { _defaultPrefix } + "api/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
     }
   
     // @LINE:13
     def update(id:String): Call = {
       
-      Call("PUT", _prefix + { _defaultPrefix } + "update/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
+      Call("PUT", _prefix + { _defaultPrefix } + "api/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
     }
   
     // @LINE:7
