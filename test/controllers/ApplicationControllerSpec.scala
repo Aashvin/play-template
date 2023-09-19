@@ -11,7 +11,7 @@ import play.api.test.Helpers.{contentAsJson, defaultAwaitTimeout, status}
 import scala.concurrent.Future
 
 class ApplicationControllerSpec extends BaseSpecWithApplication {
-    val TestApplicationController: ApplicationController = new ApplicationController(component, repository, service)
+    val TestApplicationController: ApplicationController = new ApplicationController(component, repoService, service)
 
     private val dataModel: DataModel = DataModel(
         "abcd",
@@ -89,7 +89,8 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
             status(createdResult) shouldBe Status.CREATED
 
             val readResult: Future[Result] = TestApplicationController.read("xyz")(FakeRequest())
-            status(readResult) shouldBe Status.BAD_REQUEST
+
+            status(readResult) shouldBe Status.NOT_FOUND
 
             afterEach()
         }
@@ -164,7 +165,7 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
 
             val deleteResult: Future[Result] = TestApplicationController.delete("xyz")(FakeRequest())
 
-            status(deleteResult) shouldBe Status.ACCEPTED
+            status(deleteResult) shouldBe Status.NOT_FOUND
 
             afterEach()
         }

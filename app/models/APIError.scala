@@ -14,4 +14,8 @@ object APIError {
             s"Bad response from upstream; got status: $upstreamStatus, and got reason $upstreamMessage"
         )
 
+    final case class CRUDAPIError(override val httpResponseStatus: Int, override val reason: String)
+        extends APIError(
+            httpResponseStatus, reason
+        )
 }

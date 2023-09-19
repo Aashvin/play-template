@@ -28,19 +28,31 @@ package controllers {
       Call("POST", _prefix + { _defaultPrefix } + "api/create")
     }
   
-    // @LINE:17
+    // @LINE:21
     def getGoogleBook(search:String, term:String): Call = {
       
       Call("GET", _prefix + { _defaultPrefix } + "library/google/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("search", search)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("term", term)))
     }
   
-    // @LINE:15
+    // @LINE:17
+    def updateByID(id:String, field:String, value:String): Call = {
+      
+      Call("PUT", _prefix + { _defaultPrefix } + "api/update/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("field", field)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("value", value)))
+    }
+  
+    // @LINE:19
     def delete(id:String): Call = {
       
       Call("DELETE", _prefix + { _defaultPrefix } + "api/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
     }
   
     // @LINE:13
+    def findBySearch(field:String, value:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "api/search/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("field", field)) + "/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("value", value)))
+    }
+  
+    // @LINE:15
     def update(id:String): Call = {
       
       Call("PUT", _prefix + { _defaultPrefix } + "api/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))

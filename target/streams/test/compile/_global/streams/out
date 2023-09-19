@@ -1,11 +1,6 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/test/services/LibraryServiceSpec.scala:57:48: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : cats.data.EitherT[scala.concurrent.Future,models.APIError,models.Book][0m
-[0m[[0m[31merror[0m] [0m[0m required: LibraryServiceSpec.this.FutureConcept[?][0m
-[0m[[0m[31merror[0m] [0m[0m            whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "")) { result =>[0m
-[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
-[0m[[0m[31merror[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/test/services/LibraryServiceSpec.scala:70:48: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : cats.data.EitherT[scala.concurrent.Future,models.APIError,models.Book][0m
-[0m[[0m[31merror[0m] [0m[0m required: LibraryServiceSpec.this.FutureConcept[?][0m
-[0m[[0m[31merror[0m] [0m[0m            whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "")) { result =>[0m
-[0m[[0m[31merror[0m] [0m[0m                                               ^[0m
-[0m[[0m[31merror[0m] [0m[0mtwo errors found[0m
+[0m[[0m[31merror[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:14:97: type mismatch;[0m
+[0m[[0m[31merror[0m] [0m[0m found   : repositories.DataRepository[0m
+[0m[[0m[31merror[0m] [0m[0m required: services.RepositoryService[0m
+[0m[[0m[31merror[0m] [0m[0m    val TestApplicationController: ApplicationController = new ApplicationController(component, repository, service)[0m
+[0m[[0m[31merror[0m] [0m[0m                                                                                                ^[0m
+[0m[[0m[31merror[0m] [0m[0mone error found[0m

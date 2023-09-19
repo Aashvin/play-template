@@ -37,7 +37,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:17
+    // @LINE:21
     def getGoogleBook: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.getGoogleBook",
       """
@@ -47,7 +47,17 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:15
+    // @LINE:17
+    def updateByID: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.updateByID",
+      """
+        function(id0,field1,value2) {
+          return _wA({method:"PUT", url:"""" + _prefix + { _defaultPrefix } + """" + "api/update/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("id", id0)) + "/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("field", field1)) + "/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("value", value2))})
+        }
+      """
+    )
+  
+    // @LINE:19
     def delete: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.delete",
       """
@@ -58,6 +68,16 @@ package controllers.javascript {
     )
   
     // @LINE:13
+    def findBySearch: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.findBySearch",
+      """
+        function(field0,value1) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "api/search/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("field", field0)) + "/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("value", value1))})
+        }
+      """
+    )
+  
+    // @LINE:15
     def update: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.update",
       """
