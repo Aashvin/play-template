@@ -40,7 +40,7 @@ object ImageLinks {
 
 case class VolumeInfo (
     title: String,
-    authors: Array[String],
+    authors: Option[Array[String]],
     publishedDate: String,
     industryIdentifiers: Array[IndustryIdentifiers],
     readingModes: ReadingModes,
@@ -50,7 +50,7 @@ case class VolumeInfo (
     allowAnonLogging: Boolean,
     contentVersion: String,
     panelizationSummary: PanelizationSummary,
-    imageLinks: ImageLinks,
+    imageLinks: Option[ImageLinks],
     language: String,
     previewLink: String,
     infoLink: String,

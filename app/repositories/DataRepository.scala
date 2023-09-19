@@ -1,20 +1,34 @@
 package repositories
 
+import com.google.inject.ImplementedBy
 import models.{APIError, DataModel}
+import org.mongodb.scala.{MongoWriteException, WriteError}
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.{empty, equal}
 import org.mongodb.scala.model.Updates.set
 import org.mongodb.scala.model._
-import org.mongodb.scala.{Document, result}
-import play.api.libs.json.Json
+import play.api.PlayException
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
 import javax.inject.{Inject, Singleton}
 import scala.concurrent.{ExecutionContext, Future}
 
+@ImplementedBy(classOf[DataRepository])
+trait RepositoryTrait {
+    def index(): Future[Either[APIError.BadAPIResponse, Seq[DataModel]]]
+    def create(book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]]
+    def read(id: String): Future[Either[APIError.CRUDAPIError, DataModel]]
+    def findBySearch(field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]]
+    def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, Boolean]]
+
+    def updateByID(id: String, field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]]
+    def delete(id: String): Future[Either[APIError.CRUDAPIError, Boolean]]
+    def deleteAll(): Future[Unit]
+}
+
 @Singleton
-class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: ExecutionContext) extends PlayMongoRepository[DataModel](
+class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: ExecutionContext) extends PlayMongoRepository[DataModel] (
     collectionName = "dataModels",
     mongoComponent = mongoComponent,
     domainFormat = DataModel.formats,
@@ -36,14 +50,15 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
 //            .toFuture()
 //            .map(_ => book)
 
-    def create(book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]] =
+    def create(book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]] = {
         collection
             .insertOne(book)
             .toFutureOption()
             .map {
-                case Some(_) => Right(book)
-                case _ => Left(APIError.CRUDAPIError(400, "Could not update book."))
+                case Some(value) if value.wasAcknowledged() => Right(book)
+                case _ => Left(APIError.CRUDAPIError(400, "Could not create book."))
             }
+    }
 
     private def byID(id: String): Bson =
         Filters.and(

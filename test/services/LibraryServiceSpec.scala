@@ -54,7 +54,7 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
                 .returning(EitherT.rightT[Future, APIError](gameOfThrones.as[DataModel]))
                 .once()
 
-            whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) { result =>
+            whenReady(testService.getGoogleBookAsDataModel(urlOverride = Some(url), search = "", term = "").value) { result =>
                 result shouldBe Right(DataModel("someId", "A Game of Thrones", "The best book!!!", 100))
             }
         }
@@ -67,7 +67,7 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
                 .returning(EitherT.leftT[Future, DataModel](APIError.BadAPIResponse(400, "Could not connect"))) // How do we return an error?
                 .once()
 
-            whenReady(testService.getGoogleBook(urlOverride = Some(url), search = "", term = "").value) { result =>
+            whenReady(testService.getGoogleBookAsDataModel(urlOverride = Some(url), search = "", term = "").value) { result =>
                 result shouldBe Left(APIError.BadAPIResponse(400, "Could not connect"))
             }
         }

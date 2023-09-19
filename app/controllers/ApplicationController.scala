@@ -11,6 +11,24 @@ import scala.concurrent.{ExecutionContext, Future}
 @Singleton
 class ApplicationController @Inject()(val controllerComponents: ControllerComponents, val repositoryService: RepositoryService, val libraryService: LibraryService)(implicit val ec: ExecutionContext) extends BaseController {
 
+    def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
+        libraryService.getGoogleBook(search = search, term = term).value.map {
+            case Right(book) => Ok {
+                Json.toJson(book)
+            } //Hint: This should be the same as before
+            case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
+        }
+    }
+
+    def getGoogleBookAsDataModel(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
+        libraryService.getGoogleBookAsDataModel(search = search, term = term).value.map {
+            case Right(book) => Ok {
+                Json.toJson(book)
+            } //Hint: This should be the same as before
+            case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
+        }
+    }
+
     def index(): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.index().map {
             case Right(value: JsValue) => Ok(value)
@@ -26,6 +44,16 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             case JsError(_) => Future(BadRequest)
+        }
+    }
+
+    def createFromGoogle(search: String, term: String) : Action[AnyContent] = Action.async { implicit request =>
+        libraryService.getGoogleBookAsDataModel(search = search, term = term).value.flatMap {
+            case Right(dataModel: DataModel) => repositoryService.create(dataModel).flatMap {
+                case Right(thing: JsValue) => Future(Created(thing))
+                case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
+            }
+            case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
         }
     }
 
@@ -64,13 +92,6 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     def delete(id: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.delete(id).map {
             case Right(_: Boolean) => Accepted
-            case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
-        }
-    }
-
-    def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
-        libraryService.getGoogleBook(search = search, term = term).value.map {
-            case Right(book) => Ok {Json.toJson(book)} //Hint: This should be the same as before
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }

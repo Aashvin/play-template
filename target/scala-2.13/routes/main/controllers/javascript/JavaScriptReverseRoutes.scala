@@ -17,7 +17,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:11
+    // @LINE:13
     def read: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.read",
       """
@@ -37,7 +37,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:21
+    // @LINE:23
     def getGoogleBook: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.getGoogleBook",
       """
@@ -47,7 +47,17 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:17
+    // @LINE:11
+    def createFromGoogle: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.createFromGoogle",
+      """
+        function(search0,term1) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "api/create/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("search", search0)) + "/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("term", term1))})
+        }
+      """
+    )
+  
+    // @LINE:19
     def updateByID: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.updateByID",
       """
@@ -57,7 +67,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:19
+    // @LINE:21
     def delete: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.delete",
       """
@@ -67,7 +77,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:13
+    // @LINE:15
     def findBySearch: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.findBySearch",
       """
@@ -77,7 +87,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:15
+    // @LINE:17
     def update: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.update",
       """
@@ -93,6 +103,16 @@ package controllers.javascript {
       """
         function() {
           return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "api"})
+        }
+      """
+    )
+  
+    // @LINE:25
+    def getGoogleBookAsDataModel: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.getGoogleBookAsDataModel",
+      """
+        function(search0,term1) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "library/googletobook/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("search", search0)) + "/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("term", term1))})
         }
       """
     )
