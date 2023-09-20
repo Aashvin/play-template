@@ -2,12 +2,10 @@ package repositories
 
 import com.google.inject.ImplementedBy
 import models.{APIError, DataModel}
-import org.mongodb.scala.{MongoWriteException, WriteError}
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.Filters.{empty, equal}
 import org.mongodb.scala.model.Updates.set
 import org.mongodb.scala.model._
-import play.api.PlayException
 import uk.gov.hmrc.mongo.MongoComponent
 import uk.gov.hmrc.mongo.play.json.PlayMongoRepository
 
@@ -71,7 +69,6 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         }
 
     def findBySearch(field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]] = {
-//        collection.find(Json.obj(field -> Json.obj("$regex" -> (".*" + value + ".*"))), None).headOption flatmap {
         val searchValue: Any = if (field == "numSales") value.toInt else value
         collection.find(Filters.equal(field, searchValue)).headOption flatMap {
             case Some(data) => Future(Right(data))

@@ -7,7 +7,7 @@ import models.{APIError, DataModel}
 import org.scalamock.scalatest.MockFactory
 import org.scalatest.concurrent.ScalaFutures
 import org.scalatestplus.play.guice.GuiceOneAppPerSuite
-import play.api.libs.json.{JsObject, JsValue, Json, OFormat}
+import play.api.libs.json.{JsValue, Json, OFormat}
 
 import scala.concurrent.{ExecutionContext, Future}
 

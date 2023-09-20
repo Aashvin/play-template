@@ -2,8 +2,7 @@ package connectors
 
 import cats.data.EitherT
 import models.{APIError, DataModel, GoogleBook}
-import org.bson.json.JsonObject
-import play.api.libs.json.{JsReadable, JsValue, OFormat}
+import play.api.libs.json.OFormat
 
 import javax.inject.Inject
 import scala.concurrent.{ExecutionContext, Future}
