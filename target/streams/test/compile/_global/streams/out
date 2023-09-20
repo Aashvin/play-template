@@ -1,6 +1,8 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/test/controllers/ApplicationControllerSpec.scala:14:97: type mismatch;[0m
-[0m[[0m[31merror[0m] [0m[0m found   : repositories.DataRepository[0m
-[0m[[0m[31merror[0m] [0m[0m required: services.RepositoryService[0m
-[0m[[0m[31merror[0m] [0m[0m    val TestApplicationController: ApplicationController = new ApplicationController(component, repository, service)[0m
-[0m[[0m[31merror[0m] [0m[0m                                                                                                ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/test/services/RepositoryServiceSpec.scala:1:1: [0m
+[0m[[0m[33mwarn[0m] [0m[0mFound names but no class, trait or object is defined in the compilation unit.[0m
+[0m[[0m[33mwarn[0m] [0m[0mThe incremental compiler cannot record the dependency information in such case.[0m
+[0m[[0m[33mwarn[0m] [0m[0mSome errors like unused import referring to a non-existent class might not be reported.[0m
+[0m[[0m[33mwarn[0m] [0m[0m    [0m
+[0m[[0m[33mwarn[0m] [0m[0mpackage services[0m
+[0m[[0m[33mwarn[0m] [0m[0m^[0m
+[0m[[0m[33mwarn[0m] [0m[0mone warning found[0m

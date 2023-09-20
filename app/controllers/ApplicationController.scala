@@ -1,15 +1,17 @@
 package controllers
 
+import models.DataModel.dataModelForm
 import models.{APIError, DataModel}
 import services.{LibraryService, RepositoryService}
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc._
+import play.filters.csrf.CSRF
 
 import javax.inject._
 import scala.concurrent.{ExecutionContext, Future}
 
 @Singleton
-class ApplicationController @Inject()(val controllerComponents: ControllerComponents, val repositoryService: RepositoryService, val libraryService: LibraryService)(implicit val ec: ExecutionContext) extends BaseController {
+class ApplicationController @Inject()(val controllerComponents: ControllerComponents, val repositoryService: RepositoryService, val libraryService: LibraryService)(implicit val ec: ExecutionContext) extends BaseController with play.api.i18n.I18nSupport {
 
     def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
         libraryService.getGoogleBook(search = search, term = term).value.map {
@@ -36,6 +38,36 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
         }
     }
 
+    private def accessToken(implicit request: Request[_]): Option[CSRF.Token] = {
+        CSRF.getToken
+    }
+
+    def addBook(): Action[AnyContent] = Action { implicit request =>
+        Ok(views.html.addBook(DataModel.dataModelForm))
+    }
+
+    def addBookForm(): Action[AnyContent] = Action.async { implicit request =>
+        accessToken //call the accessToken method
+        dataModelForm.bindFromRequest().fold( //from the implicit request we want to bind this to the form in our companion object
+            formWithErrors => {
+                Future(BadRequest(formWithErrors.errors.toString))
+            },
+            formData => {
+                repositoryService.create(formData).map {
+                    case Right(_: JsValue) => Redirect(routes.ApplicationController.example(formData._id))
+                    case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
+                }
+            }
+        )
+    }
+
+    def viewBook(id: String): Action[AnyContent] = Action.async { implicit request =>
+        repositoryService.read(id).map {
+            case Right(value: DataModel) => Ok(views.html.example(value))
+            case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
+        }
+    }
+
     def create(): Action[JsValue] = Action.async(parse.json) { implicit request =>
         request.body.validate[DataModel] match {
             case JsSuccess(dataModel, _) =>
@@ -50,7 +82,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     def createFromGoogle(search: String, term: String) : Action[AnyContent] = Action.async { implicit request =>
         libraryService.getGoogleBookAsDataModel(search = search, term = term).value.flatMap {
             case Right(dataModel: DataModel) => repositoryService.create(dataModel).flatMap {
-                case Right(thing: JsValue) => Future(Created(thing))
+                case Right(value: JsValue) => Future(Created(value))
                 case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
             }
             case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
@@ -59,7 +91,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def read(id: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.read(id).map {
-            case Right(value: JsValue) => Ok(value)
+            case Right(value: DataModel) => Ok(Json.toJson(value))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }

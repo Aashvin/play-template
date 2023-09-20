@@ -9,7 +9,7 @@ import _root_.controllers.Assets.Asset
 // @LINE:2
 package controllers.javascript {
 
-  // @LINE:7
+  // @LINE:4
   class ReverseApplicationController(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -17,7 +17,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:13
+    // @LINE:15
     def read: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.read",
       """
@@ -27,7 +27,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:9
+    // @LINE:11
     def create: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.create",
       """
@@ -37,7 +37,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:23
+    // @LINE:25
     def getGoogleBook: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.getGoogleBook",
       """
@@ -47,7 +47,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:11
+    // @LINE:13
     def createFromGoogle: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.createFromGoogle",
       """
@@ -57,7 +57,27 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:19
+    // @LINE:29
+    def addBook: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.addBook",
+      """
+        function() {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "addBook/form"})
+        }
+      """
+    )
+  
+    // @LINE:30
+    def addBookForm: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.addBookForm",
+      """
+        function() {
+          return _wA({method:"POST", url:"""" + _prefix + { _defaultPrefix } + """" + "addBook/form"})
+        }
+      """
+    )
+  
+    // @LINE:21
     def updateByID: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.updateByID",
       """
@@ -67,7 +87,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:21
+    // @LINE:23
     def delete: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.delete",
       """
@@ -77,7 +97,17 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:15
+    // @LINE:4
+    def example: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.viewBook",
+      """
+        function(id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "viewBook/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("id", id0))})
+        }
+      """
+    )
+  
+    // @LINE:17
     def findBySearch: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.findBySearch",
       """
@@ -87,7 +117,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:17
+    // @LINE:19
     def update: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.update",
       """
@@ -97,7 +127,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:7
+    // @LINE:9
     def index: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.index",
       """
@@ -107,7 +137,7 @@ package controllers.javascript {
       """
     )
   
-    // @LINE:25
+    // @LINE:27
     def getGoogleBookAsDataModel: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.getGoogleBookAsDataModel",
       """
@@ -139,7 +169,7 @@ package controllers.javascript {
   
   }
 
-  // @LINE:5
+  // @LINE:7
   class ReverseAssets(_prefix: => String) {
 
     def _defaultPrefix: String = {
@@ -147,7 +177,7 @@ package controllers.javascript {
     }
 
   
-    // @LINE:5
+    // @LINE:7
     def versioned: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.Assets.versioned",
       """

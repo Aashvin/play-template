@@ -21,7 +21,6 @@ trait RepositoryTrait {
     def read(id: String): Future[Either[APIError.CRUDAPIError, DataModel]]
     def findBySearch(field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]]
     def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, Boolean]]
-
     def updateByID(id: String, field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]]
     def delete(id: String): Future[Either[APIError.CRUDAPIError, Boolean]]
     def deleteAll(): Future[Unit]
@@ -44,13 +43,13 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
             case _ => Left(APIError.BadAPIResponse(404, "Books cannot be found"))
         }
 
-//    def create(book: DataModel): Future[DataModel] =
-//        collection
-//            .insertOne(book)
-//            .toFuture()
-//            .map(_ => book)
-
     def create(book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]] = {
+        try {
+            collection.insertOne(book)
+        } catch {
+            case _ => Left(APIError.CRUDAPIError(400, "Could not create book."))
+        }
+
         collection
             .insertOne(book)
             .toFutureOption()
@@ -64,12 +63,6 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         Filters.and(
             Filters.equal("_id", id)
         )
-
-//    def read(id: String): Future[Option[DataModel]] =
-//        collection.find(byID(id)).headOption flatMap {
-//            case Some(data) => Future(Some(data))
-//            case None => Future(None)
-//        }
 
     def read(id: String): Future[Either[APIError.CRUDAPIError, DataModel]] =
         collection.find(byID(id)).headOption flatMap {
@@ -85,13 +78,6 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
             case _ => Future(Left(APIError.CRUDAPIError(404, "Book not found.")))
         }
     }
-
-    //    def update(id: String, book: DataModel): Future[result.UpdateResult] =
-//        collection.replaceOne(
-//            filter = byID(id),
-//            replacement = book,
-//            options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
-//        ).toFuture()
 
     def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, Boolean]] =
         collection.replaceOne(

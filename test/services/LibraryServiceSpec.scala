@@ -23,33 +23,11 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
         "numSales" -> 100
     )
 
-//    "getGoogleBook" should {
-//        val url: String = "testUrl"
-//
-//        "return a book" in {
-//            (mockConnector.get[Book](_: String)(_: OFormat[Book], _: ExecutionContext))
-//                .expects(url, *, *).returning(Future(gameOfThrones.as[Book])).once()
-//
-//
-//            whenReady(testService.getGoogleBook(search = "", term = "").value) { result =>
-//                result shouldBe Book("someId", "A Game of Thrones", "The best book!!!", 100)
-//            }
-//
-//        }
-//    }
-//
-//    val gameOfThrones: JsValue = Json.obj(
-//        "_id" -> "someId",
-//        "name" -> "A Game of Thrones",
-//        "description" -> "The best book!!!",
-//        "numSales" -> 100
-//    )
-
     "getGoogleBook" should {
         val url: String = "testUrl"
 
         "return a book" in {
-            (mockConnector.get[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext))
+            (mockConnector.getAsDataModel[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext))
                 .expects(url, *, *)
                 .returning(EitherT.rightT[Future, APIError](gameOfThrones.as[DataModel]))
                 .once()
@@ -62,7 +40,7 @@ class LibraryServiceSpec extends BaseSpec with MockFactory with ScalaFutures wit
         "return an error" in {
             val url: String = "testUrl"
 
-            (mockConnector.get[JsObject](_: String)(_: OFormat[JsObject], _: ExecutionContext))
+            (mockConnector.getAsDataModel[DataModel](_: String)(_: OFormat[DataModel], _: ExecutionContext))
                 .expects(url, *, *)
                 .returning(EitherT.leftT[Future, DataModel](APIError.BadAPIResponse(400, "Could not connect"))) // How do we return an error?
                 .once()

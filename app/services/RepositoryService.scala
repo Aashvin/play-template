@@ -23,9 +23,9 @@ class RepositoryService @Inject()(val dataRepository: DataRepository)(implicit v
         }
     }
 
-    def read(id: String): Future[Either[APIError, JsValue]] = {
+    def read(id: String): Future[Either[APIError, DataModel]] = {
         dataRepository.read(id).map {
-            case Right(value) => Right(Json.toJson(value))
+            case Right(value) => Right(value)
             case Left(error: APIError) => Left(error)
         }
     }

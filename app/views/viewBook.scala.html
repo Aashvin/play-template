@@ -1,0 +1,23 @@
+@import models.DataModel
+@(book: DataModel)
+
+@main("Find Book"){
+    <h1>Google Book Api Project</h1>
+}
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Title</title>
+    </head>
+    <body>
+        <p>
+            ID: @book._id <br>
+            TITLE: @book.name <br>
+            DESCRIPTION: @book.description <br>
+            NUMBER OF SALES: @book.numSales <br>
+        </p>
+
+    </body>
+</html>

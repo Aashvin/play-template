@@ -32,17 +32,18 @@ Seq[Any](format.raw/*8.1*/("""
 """),format.raw/*9.1*/("""<!DOCTYPE html>
 <html lang="en">
     <head>
-        """),format.raw/*12.62*/("""
-        """),format.raw/*13.9*/("""<title>"""),_display_(/*13.17*/title),format.raw/*13.22*/("""</title>
-        <link rel="stylesheet" media="screen" href=""""),_display_(/*14.54*/routes/*14.60*/.Assets.versioned("stylesheets/main.css")),format.raw/*14.101*/("""">
-        <link rel="shortcut icon" type="image/png" href=""""),_display_(/*15.59*/routes/*15.65*/.Assets.versioned("images/favicon.png")),format.raw/*15.104*/("""">
+        <link rel="stylesheet" type="text/css" media="screen" href=""""),_display_(/*12.70*/routes/*12.76*/.Assets.versioned("/stylesheets/main.css")),format.raw/*12.118*/("""">
+        """),format.raw/*13.62*/("""
+        """),format.raw/*14.9*/("""<title class="title-thing">"""),_display_(/*14.37*/title),format.raw/*14.42*/("""</title>
+        <link rel="stylesheet" media="screen" href=""""),_display_(/*15.54*/routes/*15.60*/.Assets.versioned("stylesheets/main.css")),format.raw/*15.101*/("""">
+        <link rel="shortcut icon" type="image/png" href=""""),_display_(/*16.59*/routes/*16.65*/.Assets.versioned("images/favicon.png")),format.raw/*16.104*/("""">
 
     </head>
     <body>
-        """),format.raw/*20.32*/("""
-        """),_display_(/*21.10*/content),format.raw/*21.17*/("""
+        """),format.raw/*21.32*/("""
+        """),_display_(/*22.10*/content),format.raw/*22.17*/("""
 
-      """),format.raw/*23.7*/("""<script src=""""),_display_(/*23.21*/routes/*23.27*/.Assets.versioned("javascripts/main.js")),format.raw/*23.67*/("""" type="text/javascript"></script>
+      """),format.raw/*24.7*/("""<script src=""""),_display_(/*24.21*/routes/*24.27*/.Assets.versioned("javascripts/main.js")),format.raw/*24.67*/("""" type="text/javascript"></script>
     </body>
 </html>
 """))
@@ -61,11 +62,10 @@ Seq[Any](format.raw/*8.1*/("""
 
               /*
                   -- GENERATED --
-                  DATE: 2023-09-12T17:19:01.329313
-                  SOURCE: /Users/aashvin.relwani/Documents/GitHub/play-template/app/views/main.scala.html
-                  HASH: 52352176f1a784d96e62964e439264b508b87d6f
-                  MATRIX: 987->260|1111->291|1138->292|1218->397|1254->406|1289->414|1315->419|1404->481|1419->487|1482->528|1570->589|1585->595|1646->634|1709->759|1746->769|1774->776|1809->784|1850->798|1865->804|1926->844
-                  LINES: 26->7|31->8|32->9|35->12|36->13|36->13|36->13|37->14|37->14|37->14|38->15|38->15|38->15|42->20|43->21|43->21|45->23|45->23|45->23|45->23
+                  SOURCE: app/views/main.scala.html
+                  HASH: 414fee6752d4d3f29d72332e92eb818a940b7fdc
+                  MATRIX: 987->260|1111->291|1138->292|1278->405|1293->411|1357->453|1396->517|1432->526|1487->554|1513->559|1602->621|1617->627|1680->668|1768->729|1783->735|1844->774|1907->899|1944->909|1972->916|2007->924|2048->938|2063->944|2124->984
+                  LINES: 26->7|31->8|32->9|35->12|35->12|35->12|36->13|37->14|37->14|37->14|38->15|38->15|38->15|39->16|39->16|39->16|43->21|44->22|44->22|46->24|46->24|46->24|46->24
                   -- GENERATED --
               */
           
