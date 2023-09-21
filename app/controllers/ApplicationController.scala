@@ -54,7 +54,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
             },
             formData => {
                 repositoryService.create(formData).map {
-                    case Right(value: DataModel) => Redirect(routes.ApplicationController.viewBook(value._id))
+                    case Right(value: DataModel) => Ok(views.html.viewBook(value))
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             }
@@ -72,7 +72,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
         request.body.validate[DataModel] match {
             case JsSuccess(dataModel, _) =>
                 repositoryService.create(dataModel).map {
-                    case Right(value: DataModel) => Created(views.html.viewBook(value))
+                    case Right(value: DataModel) => Created(Json.toJson(value))
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             case JsError(_) => Future(BadRequest)
@@ -91,7 +91,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def read(id: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.read(id).map {
-            case Right(value: DataModel) => Ok(Json.toJson(value))
+            case Right(value: DataModel) => Ok(views.html.viewBook(value))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
