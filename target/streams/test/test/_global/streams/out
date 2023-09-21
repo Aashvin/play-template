@@ -1,15 +1,15 @@
 [0m[[0m[0mdebug[0m] [0m[0mjavaOptions: Vector()[0m
 [0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
-[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 3 initial tasks for 3 tests.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.HomeControllerSpec, sbt.ForkMain$SubclassFingerscan@74dc797b, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 4 initial tasks for 4 tests.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.HomeControllerSpec, sbt.ForkMain$SubclassFingerscan@58161a32, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mHomeControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mHomeController GET[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should render the index page from a new instance of controller[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should render the index page from the application[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should render the index page from the router[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 3 events.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.ApplicationControllerSpec, sbt.ForkMain$SubclassFingerscan@76042dd3, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.ApplicationControllerSpec, sbt.ForkMain$SubclassFingerscan@5dfa8ea9, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index()[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return OK[0m[0m
@@ -26,7 +26,39 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should remove a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should handle bad requests[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 9 events.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@551595c4, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.RepositoryServiceSpec, sbt.ForkMain$SubclassFingerscan@51b9bbc9, false, [SuiteSelector])[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryServiceSpec:[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .index()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a sequence of DataModels[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .create()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a DataModel[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error when creation is unsuccessful[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error when the id already exists[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .read()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a DataModel[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .findBySearch()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a DataModel from string field search[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a DataModel from int field search[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error when string field is not a match[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error when int field is not a match[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an API error when the field does not exist[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .update()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an updated DataModel book[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 400 APIError when trying to change the ID[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 404 API error[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 400 API error when the updates contain the same field values[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .updateByID()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get an updated DataModel book[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 400 APIError when trying to change the ID[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 404 API error[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 400 API error when the update contains the same field value[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .updateByID()[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a boolean true if upon successful deletion[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[32m- should get a 404 APIError[0m[0m
+[0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 22 events.[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@1e1bab20, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mLibraryServiceSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mgetGoogleBook[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return a book[0m[0m
@@ -34,14 +66,15 @@
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 2 events.[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunner for com.novocode.junit.JUnitFramework produced 0 initial tasks for 0 tests.[0m
 [0m[[0m[0minfo[0m] [0m[0mScalaTest[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 722 milliseconds.[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 14[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 3, aborted 0[0m[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 14, failed 0, canceled 0, ignored 0, pending 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 868 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 36[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 36, failed 0, canceled 0, ignored 0, pending 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mAll tests passed.[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0mSummary for JUnit not available.[0m
-[0m[[0m[0minfo[0m] [0m[0mPassed: Total 14, Failed 0, Errors 0, Passed 14[0m
+[0m[[0m[0minfo[0m] [0m[0mPassed: Total 36, Failed 0, Errors 0, Passed 36[0m
 [0m[[0m[0mdebug[0m] [0m[0mPassed tests:[0m
 [0m[[0m[0mdebug[0m] [0m[0m	controllers.ApplicationControllerSpec[0m
+[0m[[0m[0mdebug[0m] [0m[0m	services.RepositoryServiceSpec[0m
 [0m[[0m[0mdebug[0m] [0m[0m	controllers.HomeControllerSpec[0m
 [0m[[0m[0mdebug[0m] [0m[0m	services.LibraryServiceSpec[0m

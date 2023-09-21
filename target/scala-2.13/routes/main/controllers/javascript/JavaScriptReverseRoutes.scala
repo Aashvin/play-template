@@ -67,6 +67,16 @@ package controllers.javascript {
       """
     )
   
+    // @LINE:4
+    def viewBook: JavaScriptReverseRoute = JavaScriptReverseRoute(
+      "controllers.ApplicationController.viewBook",
+      """
+        function(id0) {
+          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "viewBook/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("id", id0))})
+        }
+      """
+    )
+  
     // @LINE:30
     def addBookForm: JavaScriptReverseRoute = JavaScriptReverseRoute(
       "controllers.ApplicationController.addBookForm",
@@ -93,16 +103,6 @@ package controllers.javascript {
       """
         function(id0) {
           return _wA({method:"DELETE", url:"""" + _prefix + { _defaultPrefix } + """" + "api/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("id", id0))})
-        }
-      """
-    )
-  
-    // @LINE:4
-    def example: JavaScriptReverseRoute = JavaScriptReverseRoute(
-      "controllers.ApplicationController.viewBook",
-      """
-        function(id0) {
-          return _wA({method:"GET", url:"""" + _prefix + { _defaultPrefix } + """" + "viewBook/" + encodeURIComponent((""" + implicitly[play.api.mvc.PathBindable[String]].javascriptUnbind + """)("id", id0))})
         }
       """
     )

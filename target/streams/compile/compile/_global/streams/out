@@ -1,4 +1,20 @@
-[0m[[0m[31merror[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/app/CustomErrorHandler.scala:27:18: class com.mongodb.MongoWriteException is not a value[0m
-[0m[[0m[31merror[0m] [0m[0m            case MongoWriteException => Future.successful(Status(400)(Json.toJson("Could not create book.")))[0m
-[0m[[0m[31merror[0m] [0m[0m                 ^[0m
-[0m[[0m[31merror[0m] [0m[0mone error found[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/app/repositories/DataRepository.scala:45:41: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
+[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
+[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        collection.find(byID(book._id)).headOption flatMap {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                        ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/app/repositories/DataRepository.scala:64:35: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
+[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
+[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        collection.find(byID(id)).headOption flatMap {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                  ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/app/repositories/DataRepository.scala:71:60: Auto-application to `()` is deprecated. Supply the empty argument list `()` explicitly to invoke method headOption,[0m
+[0m[[0m[33mwarn[0m] [0m[0mor remove the empty argument list from its definition (Java-defined methods are exempt).[0m
+[0m[[0m[33mwarn[0m] [0m[0mIn Scala 3, an unapplied method like this will be eta-expanded into a function.[0m
+[0m[[0m[33mwarn[0m] [0m[0m        collection.find(Filters.equal(field, searchValue)).headOption flatMap {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0m/Users/aashvin.relwani/Documents/GitHub/play-template/app/repositories/DataRepository.scala:106:44: match may not be exhaustive.[0m
+[0m[[0m[33mwarn[0m] [0m[0mIt would fail on the following input: Some(_)[0m
+[0m[[0m[33mwarn[0m] [0m[0m                ).toFutureOption().flatMap {[0m
+[0m[[0m[33mwarn[0m] [0m[0m                                           ^[0m
+[0m[[0m[33mwarn[0m] [0m[0mfour warnings found[0m

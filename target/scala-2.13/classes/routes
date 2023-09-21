@@ -1,7 +1,7 @@
-# An example controller showing a sample home page
+# An viewBook controller showing a sample home page
 GET     /                           controllers.HomeController.index()
 
-GET     /example/:id        controllers.ApplicationController.example(id: String)
+GET     /viewBook/:id        controllers.ApplicationController.viewBook(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
@@ -10,7 +10,7 @@ GET     /api     controllers.ApplicationController.index()
 
 POST    /api/create     controllers.ApplicationController.create()
 
-GET    /api/create/:search/:term       controllers.ApplicationController.createFromGoogle(search: String, term:String)
+GET     /api/create/:search/:term       controllers.ApplicationController.createFromGoogle(search: String, term:String)
 
 GET     /api/:id       controllers.ApplicationController.read(id: String)
 
@@ -26,5 +26,5 @@ GET     /library/google/:search/:term      controllers.ApplicationController.get
 
 GET     /library/googletobook/:search/:term      controllers.ApplicationController.getGoogleBookAsDataModel(search: String, term: String)
 
-GET      /addBook/form     controllers.ApplicationController.addBook()
-POST     /addBook/form     controllers.ApplicationController.addBookForm()
+GET     /addBook/form     controllers.ApplicationController.addBook()
+POST    /addBook/form     controllers.ApplicationController.addBookForm()

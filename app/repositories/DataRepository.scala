@@ -18,7 +18,7 @@ trait RepositoryTrait {
     def create(book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]]
     def read(id: String): Future[Either[APIError.CRUDAPIError, DataModel]]
     def findBySearch(field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]]
-    def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, Boolean]]
+    def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]]
     def updateByID(id: String, field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]]
     def delete(id: String): Future[Either[APIError.CRUDAPIError, Boolean]]
     def deleteAll(): Future[Unit]
@@ -33,7 +33,7 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         Indexes.ascending("_id")
     )),
     replaceIndexes = false
-) {
+) with RepositoryTrait {
 
     def index(): Future[Either[APIError.BadAPIResponse, Seq[DataModel]]] =
         collection.find().toFuture().map {
@@ -42,19 +42,17 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         }
 
     def create(book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]] = {
-        try {
-            collection.insertOne(book)
-        } catch {
-            case _ => Left(APIError.CRUDAPIError(400, "Could not create book."))
+        collection.find(byID(book._id)).headOption flatMap {
+            case Some(_) => Future(Left(APIError.CRUDAPIError(400, "A book with this ID already exists.")))
+            case None => collection
+                .insertOne(book)
+                .toFutureOption()
+                .map {
+                    case Some(value) if value.wasAcknowledged() => Right(book)
+                    case _ => Left(APIError.CRUDAPIError(400, "Could not create book."))
+                }
         }
 
-        collection
-            .insertOne(book)
-            .toFutureOption()
-            .map {
-                case Some(value) if value.wasAcknowledged() => Right(book)
-                case _ => Left(APIError.CRUDAPIError(400, "Could not create book."))
-            }
     }
 
     private def byID(id: String): Bson =
@@ -76,33 +74,41 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         }
     }
 
-    def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, Boolean]] =
-        collection.replaceOne(
-            filter = byID(id),
-            replacement = book,
-            options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
-        ).toFutureOption().map {
-            case Some(value) => if (value.getMatchedCount == 1 && value.getModifiedCount == 1) {
-                Right(true)
-            } else if (value.getMatchedCount == 0 && value.getModifiedCount == 0) {
-                Right(false)
-            } else {
-                Left(APIError.CRUDAPIError(404, "Book not found."))
-            }
-            case _ => Left(APIError.CRUDAPIError(400, "Could not update book."))
+    def update(id: String, book: DataModel): Future[Either[APIError.CRUDAPIError, DataModel]] = {
+        collection.find(byID(id)).headOption().flatMap {
+            case Some(dataModel: DataModel) =>
+                if (dataModel._id != book._id) {
+                    Future(Left(APIError.CRUDAPIError(400, "The updated ID needs to be the same as the current ID.")))
+                } else {
+                    collection.replaceOne(
+                        filter = byID(id),
+                        replacement = book,
+                        options = new ReplaceOptions().upsert(true) //What happens when we set this to false?
+                    ).toFutureOption().flatMap {
+                        case Some(result) if result.getMatchedCount == 1 && result.getModifiedCount == 1 => read(id)
+                        case _ => Future(Left(APIError.CRUDAPIError(400, "No book fields were updated.")))
+                    }
+                }
+            case None => Future(Left(APIError.CRUDAPIError(404, "Book not found.")))
         }
+    }
 
     def updateByID(id: String, field: String, value: String): Future[Either[APIError.CRUDAPIError, DataModel]] = {
-        val searchValue: Any = if (field == "numSales") value.toInt else value
-        collection.updateOne(equal("_id", id), set(field, searchValue)).toFutureOption().flatMap {
-            case Some(result) => if (result.getMatchedCount == 1 && result.getModifiedCount == 1) {
-                read(id)
-            } else if (result.getMatchedCount == 1 && result.getModifiedCount == 0) {
-                Future(Left(APIError.CRUDAPIError(400, s"Book $field is already $value.")))
-            } else {
-                Future(Left(APIError.CRUDAPIError(404, "Book not found.")))
+        if (field == "_id") {
+            Future(Left(APIError.CRUDAPIError(400, "Cannot update the ID field.")))
+        } else {
+            val searchValue: Any = if (field == "numSales") value.toInt else value
+            collection.find(byID(id)).headOption().flatMap {
+                case Some(_) => collection.updateOne(
+                    equal("_id", id),
+                    set(field, searchValue),
+                    options = new UpdateOptions().upsert(true).bypassDocumentValidation(false)
+                ).toFutureOption().flatMap {
+                    case Some(result) if result.getMatchedCount == 1 && result.getModifiedCount == 1 => read(id)
+                    case None => Future(Left(APIError.CRUDAPIError(400, s"Book $field is already $value.")))
+                }
+                case None => Future(Left(APIError.CRUDAPIError(404, "Book not found.")))
             }
-            case None => Future(Left(APIError.CRUDAPIError(400, "Could not update book.")))
         }
     }
 
@@ -110,10 +116,8 @@ class DataRepository @Inject()(mongoComponent: MongoComponent)(implicit ec: Exec
         collection.deleteOne(
             filter = byID(id)
         ).toFutureOption().map {
-            case Some(value) => if (value.getDeletedCount == 1) Right(true) else {
-                Left(APIError.CRUDAPIError(404, "Book not found."))
-            }
-            case _ => Left(APIError.CRUDAPIError(400, "Could not delete book."))
+            case Some(value) if value.getDeletedCount == 1 => Right(true)
+            case _ => Left(APIError.CRUDAPIError(404, "Book not found."))
         }
     }
 

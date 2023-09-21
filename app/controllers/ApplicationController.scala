@@ -33,7 +33,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def index(): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.index().map {
-            case Right(value: JsValue) => Ok(value)
+            case Right(value: Seq[DataModel]) => Ok(Json.toJson(value))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
@@ -54,7 +54,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
             },
             formData => {
                 repositoryService.create(formData).map {
-                    case Right(_: JsValue) => Redirect(routes.ApplicationController.example(formData._id))
+                    case Right(value: DataModel) => Redirect(routes.ApplicationController.viewBook(value._id))
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             }
@@ -63,7 +63,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def viewBook(id: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.read(id).map {
-            case Right(value: DataModel) => Ok(views.html.example(value))
+            case Right(value: DataModel) => Ok(views.html.viewBook(value))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
@@ -72,7 +72,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
         request.body.validate[DataModel] match {
             case JsSuccess(dataModel, _) =>
                 repositoryService.create(dataModel).map {
-                    case Right(value: JsValue) => Created(value)
+                    case Right(value: DataModel) => Created(views.html.viewBook(value))
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             case JsError(_) => Future(BadRequest)
@@ -82,7 +82,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     def createFromGoogle(search: String, term: String) : Action[AnyContent] = Action.async { implicit request =>
         libraryService.getGoogleBookAsDataModel(search = search, term = term).value.flatMap {
             case Right(dataModel: DataModel) => repositoryService.create(dataModel).flatMap {
-                case Right(value: JsValue) => Future(Created(value))
+                case Right(value: DataModel) => Future(Created(views.html.viewBook(value)))
                 case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
             }
             case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
@@ -98,7 +98,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def findBySearch(field: String, value: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.findBySearch(field, value).map {
-            case Right(value: JsValue) => Ok(value)
+            case Right(value: DataModel) => Ok(views.html.viewBook(value))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
@@ -107,7 +107,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
         request.body.validate[DataModel] match {
             case JsSuccess(dataModel, _) =>
                 repositoryService.update(id, dataModel).map {
-                    case Right(value: JsValue) => Accepted(value)
+                    case Right(value: DataModel) => Accepted(Json.toJson(value))
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             case JsError(_) => Future(BadRequest)
@@ -116,7 +116,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def updateByID(id: String, field: String, value: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.updateByID(id, field, value).map {
-            case Right(value: JsValue) => Accepted(value)
+            case Right(value: DataModel) => Accepted(Json.toJson(value))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }

@@ -83,11 +83,11 @@ class Routes(
   )
 
   // @LINE:4
-  private[this] lazy val controllers_ApplicationController_example1_route = Route("GET",
+  private[this] lazy val controllers_ApplicationController_viewBook1_route = Route("GET",
     PathPattern(List(StaticPart(this.prefix), StaticPart(this.defaultPrefix), StaticPart("viewBook/"), DynamicPart("id", """[^/]+""",true)))
   )
-  private[this] lazy val controllers_ApplicationController_example1_invoker = createInvoker(
-    ApplicationController_0.example(fakeValue[String]),
+  private[this] lazy val controllers_ApplicationController_viewBook1_invoker = createInvoker(
+    ApplicationController_0.viewBook(fakeValue[String]),
     play.api.routing.HandlerDef(this.getClass.getClassLoader,
       "router",
       "controllers.ApplicationController",
@@ -344,9 +344,9 @@ class Routes(
       }
   
     // @LINE:4
-    case controllers_ApplicationController_example1_route(params@_) =>
+    case controllers_ApplicationController_viewBook1_route(params@_) =>
       call(params.fromPath[String]("id", None)) { (id) =>
-        controllers_ApplicationController_example1_invoker.call(ApplicationController_0.example(id))
+        controllers_ApplicationController_viewBook1_invoker.call(ApplicationController_0.viewBook(id))
       }
   
     // @LINE:7

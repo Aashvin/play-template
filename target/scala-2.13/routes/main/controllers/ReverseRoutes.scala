@@ -46,6 +46,12 @@ package controllers {
       Call("GET", _prefix + { _defaultPrefix } + "addBook/form")
     }
   
+    // @LINE:4
+    def viewBook(id:String): Call = {
+      
+      Call("GET", _prefix + { _defaultPrefix } + "viewBook/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
+    }
+  
     // @LINE:30
     def addBookForm(): Call = {
       
@@ -62,12 +68,6 @@ package controllers {
     def delete(id:String): Call = {
       
       Call("DELETE", _prefix + { _defaultPrefix } + "api/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
-    }
-  
-    // @LINE:4
-    def example(id:String): Call = {
-      
-      Call("GET", _prefix + { _defaultPrefix } + "viewBook/" + play.core.routing.dynamicString(implicitly[play.api.mvc.PathBindable[String]].unbind("id", id)))
     }
   
     // @LINE:17
