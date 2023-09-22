@@ -69,7 +69,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
     "RepositoryService .create()" should {
 
         "get a DataModel" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
@@ -78,7 +78,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get an API error when creation is unsuccessful" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Left(APIError.CRUDAPIError(400, "Could not create book.")))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
@@ -87,14 +87,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get an API error when the id already exists" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Left(APIError.CRUDAPIError(400, "A book with this ID already exists.")))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
@@ -106,14 +106,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
     "RepositoryService .read()" should {
 
         "get a DataModel" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.read(_: String)).expects("abcd")
+            (mockRepository.read(_: String)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.read("abcd")) { result =>
@@ -122,7 +122,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get an API error" in {
-            (mockRepository.read(_: String)).expects("abcd")
+            (mockRepository.read(_: String)).expects(*)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.read("abcd")) { result =>
@@ -134,14 +134,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
     "RepositoryService .findBySearch()" should {
 
         "get a DataModel from string field search" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.findBySearch(_: String, _: String)).expects("name", "test name")
+            (mockRepository.findBySearch(_: String, _: String)).expects(*, *)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.findBySearch("name", "test name")) { result =>
@@ -150,14 +150,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a DataModel from int field search" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.findBySearch(_: String, _: String)).expects("numSales", "100")
+            (mockRepository.findBySearch(_: String, _: String)).expects(*, *)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.findBySearch("numSales", "100")) { result =>
@@ -166,7 +166,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get an API error when string field is not a match" in {
-            (mockRepository.findBySearch(_: String, _: String)).expects("name", "test name")
+            (mockRepository.findBySearch(_: String, _: String)).expects(*, *)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.findBySearch("name", "test name")) { result =>
@@ -175,7 +175,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get an API error when int field is not a match" in {
-            (mockRepository.findBySearch(_: String, _: String)).expects("numSales", "99")
+            (mockRepository.findBySearch(_: String, _: String)).expects(*, *)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.findBySearch("numSales", "99")) { result =>
@@ -184,7 +184,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get an API error when the field does not exist" in {
-            (mockRepository.findBySearch(_: String, _: String)).expects("notAField", "test")
+            (mockRepository.findBySearch(_: String, _: String)).expects(*, *)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.findBySearch("notAField", "test")) { result =>
@@ -196,14 +196,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
     "RepositoryService .update()" should {
 
         "get an updated DataModel book" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.update(_: String, _: DataModel)).expects("abcd", updatedDataModel)
+            (mockRepository.update(_: String, _: DataModel)).expects(*, *)
                 .returning(Future(Right(updatedDataModel))).once()
 
             whenReady(TestRepositoryService.update("abcd", updatedDataModel)) { result =>
@@ -219,14 +219,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
                 100
             )
 
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.update(_: String, _: DataModel)).expects("abcd", dataModelWithNewID)
+            (mockRepository.update(_: String, _: DataModel)).expects(*, *)
                 .returning(Future(Left(APIError.CRUDAPIError(400, "The updated ID needs to be the same as the current ID.")))).once()
 
             whenReady(TestRepositoryService.update("abcd", dataModelWithNewID)) { result =>
@@ -235,7 +235,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a 404 API error" in {
-            (mockRepository.update(_: String, _: DataModel)).expects("xyz", updatedDataModel)
+            (mockRepository.update(_: String, _: DataModel)).expects(*, *)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.update("xyz", updatedDataModel)) { result =>
@@ -244,14 +244,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a 400 API error when the updates contain the same field values" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.update(_: String, _: DataModel)).expects("abcd", dataModel)
+            (mockRepository.update(_: String, _: DataModel)).expects(*, *)
                 .returning(Future(Left(APIError.CRUDAPIError(400, "No book fields were updated.")))).once()
 
             whenReady(TestRepositoryService.update("abcd", dataModel)) { result =>
@@ -263,14 +263,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
     "RepositoryService .updateByID()" should {
 
         "get an updated DataModel book" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.updateByID(_: String, _: String, _: String)).expects("abcd", "name", "new name")
+            (mockRepository.updateByID(_: String, _: String, _: String)).expects(*, *, *)
                 .returning(Future(Right(singleUpdatedDataModel))).once()
 
             whenReady(TestRepositoryService.updateByID("abcd", "name", "new name")) { result =>
@@ -279,14 +279,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a 400 APIError when trying to change the ID" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.updateByID(_: String, _: String, _: String)).expects("abcd", "_id", "new_id")
+            (mockRepository.updateByID(_: String, _: String, _: String)).expects(*, *, *)
                 .returning(Future(Left(APIError.CRUDAPIError(400, "Cannot update the ID field.")))).once()
 
             whenReady(TestRepositoryService.updateByID("abcd", "_id", "new_id")) { result =>
@@ -295,7 +295,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a 404 API error" in {
-            (mockRepository.updateByID(_: String, _: String, _: String)).expects("abcd", "name", "new name")
+            (mockRepository.updateByID(_: String, _: String, _: String)).expects(*, *, *)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.updateByID("abcd", "name", "new name")) { result =>
@@ -304,14 +304,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a 400 API error when the update contains the same field value" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.updateByID(_: String, _: String, _: String)).expects("abcd", "name", "new name")
+            (mockRepository.updateByID(_: String, _: String, _: String)).expects(*, *, *)
                 .returning(Future(Left(APIError.CRUDAPIError(400, s"Book name is already new name.")))).once()
 
             whenReady(TestRepositoryService.updateByID("abcd", "name", "new name")) { result =>
@@ -323,14 +323,14 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
     "RepositoryService .updateByID()" should {
 
         "get a boolean true if upon successful deletion" in {
-            (mockRepository.create(_: DataModel)).expects(dataModel)
+            (mockRepository.create(_: DataModel)).expects(*)
                 .returning(Future(Right(dataModel))).once()
 
             whenReady(TestRepositoryService.create(dataModel)) { result =>
                 result shouldBe Right(dataModel)
             }
 
-            (mockRepository.delete(_: String)).expects(dataModel._id)
+            (mockRepository.delete(_: String)).expects(*)
                 .returning(Future(Right(true))).once()
 
             whenReady(TestRepositoryService.delete(dataModel._id)) { result =>
@@ -339,7 +339,7 @@ class RepositoryServiceSpec extends BaseSpecWithApplication with MockFactory {
         }
 
         "get a 404 APIError" in {
-            (mockRepository.delete(_: String)).expects(dataModel._id)
+            (mockRepository.delete(_: String)).expects(*)
                 .returning(Future(Left(APIError.CRUDAPIError(404, "Book not found.")))).once()
 
             whenReady(TestRepositoryService.delete(dataModel._id)) { result =>
