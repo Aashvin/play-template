@@ -2,14 +2,14 @@
 [0m[[0m[0mdebug[0m] [0m[0mForking tests - parallelism = false[0m
 [0m[[0m[0mdebug[0m] [0m[0mCreate a single-thread test executor[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunner for org.scalatest.tools.Framework produced 4 initial tasks for 4 tests.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.HomeControllerSpec, sbt.ForkMain$SubclassFingerscan@467ba0de, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.HomeControllerSpec, sbt.ForkMain$SubclassFingerscan@365e861d, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mHomeControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mHomeController GET[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should render the index page from a new instance of controller[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should render the index page from the application[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should render the index page from the router[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 3 events.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.ApplicationControllerSpec, sbt.ForkMain$SubclassFingerscan@3457a04, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(controllers.ApplicationControllerSpec, sbt.ForkMain$SubclassFingerscan@6bcb7709, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationControllerSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mApplicationController .index()[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return OK[0m[0m
@@ -26,7 +26,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should remove a book in the database by id[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should handle bad requests[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 9 events.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.RepositoryServiceSpec, sbt.ForkMain$SubclassFingerscan@29136924, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.RepositoryServiceSpec, sbt.ForkMain$SubclassFingerscan@362d81b3, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mRepositoryServiceSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mRepositoryService .index()[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should get a sequence of DataModels[0m[0m
@@ -58,7 +58,7 @@
 [0m[[0m[0minfo[0m] [0m[0m[32m- should get a boolean true if upon successful deletion[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should get a 404 APIError[0m[0m
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 22 events.[0m
-[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@70248a15, false, [SuiteSelector])[0m
+[0m[[0m[0mdebug[0m] [0m[0m  Running TaskDef(services.LibraryServiceSpec, sbt.ForkMain$SubclassFingerscan@57600bc1, false, [SuiteSelector])[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mLibraryServiceSpec:[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32mgetGoogleBook[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[32m- should return a book[0m[0m
@@ -66,7 +66,7 @@
 [0m[[0m[0mdebug[0m] [0m[0m    Produced 0 nested tasks and 2 events.[0m
 [0m[[0m[0mdebug[0m] [0m[0mRunner for com.novocode.junit.JUnitFramework produced 0 initial tasks for 0 tests.[0m
 [0m[[0m[0minfo[0m] [0m[0mScalaTest[0m
-[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 769 milliseconds.[0m[0m
+[0m[[0m[0minfo[0m] [0m[0m[36mRun completed in 2 seconds, 794 milliseconds.[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTotal number of tests run: 36[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mSuites: completed 4, aborted 0[0m[0m
 [0m[[0m[0minfo[0m] [0m[0m[36mTests: succeeded 36, failed 0, canceled 0, ignored 0, pending 0[0m[0m
