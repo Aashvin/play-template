@@ -6,7 +6,7 @@ import play.api.test.FakeRequest
 import play.api.http.Status
 import play.api.libs.json.{JsValue, Json}
 import play.api.mvc.Result
-import play.api.test.Helpers.{contentAsJson, defaultAwaitTimeout, status}
+import play.api.test.Helpers.{contentAsJson, defaultAwaitTimeout, redirectLocation, status}
 
 import scala.concurrent.Future
 
@@ -74,8 +74,8 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
 
             val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
 
-            status(readResult) shouldBe Status.OK
-            contentAsJson(readResult).as[DataModel] shouldBe dataModel
+            status(readResult) shouldBe Status.SEE_OTHER
+            redirectLocation(readResult) shouldBe Some(s"/viewBook/abcd")
 
             afterEach()
         }
@@ -145,8 +145,8 @@ class ApplicationControllerSpec extends BaseSpecWithApplication {
 
             val readResult: Future[Result] = TestApplicationController.read("abcd")(FakeRequest())
 
-            status(readResult) shouldBe Status.OK
-            contentAsJson(readResult).as[DataModel] shouldBe dataModel
+            status(readResult) shouldBe Status.SEE_OTHER
+            redirectLocation(readResult) shouldBe Some(s"/viewBook/abcd")
 
             val deleteResult: Future[Result] = TestApplicationController.delete("abcd")(FakeRequest())
 

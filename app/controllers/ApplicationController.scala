@@ -1,7 +1,7 @@
 package controllers
 
 import models.DataModel.dataModelForm
-import models.{APIError, DataModel}
+import models.{APIError, DataModel, GoogleBook}
 import services.{LibraryService, RepositoryService}
 import play.api.libs.json.{JsError, JsSuccess, JsValue, Json}
 import play.api.mvc._
@@ -15,18 +15,14 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def getGoogleBook(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
         libraryService.getGoogleBook(search = search, term = term).value.map {
-            case Right(book) => Ok {
-                Json.toJson(book)
-            } //Hint: This should be the same as before
+            case Right(book: GoogleBook) => Ok(Json.toJson(book)) //Hint: This should be the same as before
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
 
     def getGoogleBookAsDataModel(search: String, term: String): Action[AnyContent] = Action.async { implicit request =>
         libraryService.getGoogleBookAsDataModel(search = search, term = term).value.map {
-            case Right(book) => Ok {
-                Json.toJson(book)
-            } //Hint: This should be the same as before
+            case Right(book: DataModel) => Ok(Json.toJson(book)) //Hint: This should be the same as before
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
@@ -54,7 +50,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
             },
             formData => {
                 repositoryService.create(formData).map {
-                    case Right(value: DataModel) => Ok(views.html.viewBook(value))
+                    case Right(value: DataModel) => Redirect(routes.ApplicationController.viewBook(value._id))
                     case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
                 }
             }
@@ -82,7 +78,7 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
     def createFromGoogle(search: String, term: String) : Action[AnyContent] = Action.async { implicit request =>
         libraryService.getGoogleBookAsDataModel(search = search, term = term).value.flatMap {
             case Right(dataModel: DataModel) => repositoryService.create(dataModel).flatMap {
-                case Right(value: DataModel) => Future(Created(views.html.viewBook(value)))
+                case Right(value: DataModel) => Future(Redirect(routes.ApplicationController.viewBook(value._id)))
                 case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
             }
             case Left(error: APIError) => Future(Status(error.httpResponseStatus)(Json.toJson(error.reason)))
@@ -91,14 +87,14 @@ class ApplicationController @Inject()(val controllerComponents: ControllerCompon
 
     def read(id: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.read(id).map {
-            case Right(value: DataModel) => Ok(views.html.viewBook(value))
+            case Right(value: DataModel) => Redirect(routes.ApplicationController.viewBook(value._id))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
 
     def findBySearch(field: String, value: String): Action[AnyContent] = Action.async { implicit request =>
         repositoryService.findBySearch(field, value).map {
-            case Right(value: DataModel) => Ok(views.html.viewBook(value))
+            case Right(value: DataModel) => Redirect(routes.ApplicationController.viewBook(value._id))
             case Left(error: APIError) => Status(error.httpResponseStatus)(Json.toJson(error.reason))
         }
     }
